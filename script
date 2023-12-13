@@ -1,0 +1,63 @@
+// ==UserScript==
+// @name         Edgenuity Script
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  Add a small purple box with a text input and button to the Edgenuity player page (activation key required)
+// @author       You
+// @match        https://r17.core.learn.edgenuity.com/player/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Obfuscated activation keys
+    const obfuscatedKeys = ['ODU2Mjk5', 'MTU3Mw==', 'OTkwMQ=='];
+
+    // Decode activation keys
+    const activationKeys = obfuscatedKeys.map(key => atob(key));
+
+    // Prompt the user for an activation key
+    const userKey = prompt('Enter activation key:');
+
+    // Check if the entered key is valid
+    if (activationKeys.includes(userKey)) {
+        // Create a div element for the purple box
+        var purpleBox = document.createElement('div');
+        purpleBox.style.position = 'fixed';
+        purpleBox.style.top = '50%';
+        purpleBox.style.left = '10px';
+        purpleBox.style.transform = 'translateY(-50%)';
+        purpleBox.style.width = '150px';
+        purpleBox.style.height = '80px';
+        purpleBox.style.background = 'purple';
+        purpleBox.style.border = '2px solid black';
+
+        // Create a text input element
+        var inputBox = document.createElement('input');
+        inputBox.type = 'text';
+        inputBox.style.width = '80%';
+        inputBox.style.marginBottom = '10px';
+        inputBox.placeholder = 'Enter text...';
+
+        // Create a button element for the "Start" button
+        var startButton = document.createElement('button');
+        startButton.innerHTML = 'Start';
+        startButton.style.width = '80%';
+        startButton.style.height = '40px';
+        startButton.style.background = 'green';
+        startButton.style.border = '2px solid black';
+        startButton.style.color = 'white';
+        startButton.style.cursor = 'pointer';
+
+        // Append the text input and button to the purple box
+        purpleBox.appendChild(inputBox);
+        purpleBox.appendChild(startButton);
+
+        // Append the purple box to the document body
+        document.body.appendChild(purpleBox);
+    } else {
+        alert('Invalid activation key. Script not activated.');
+    }
+
+})();
